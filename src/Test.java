@@ -7,6 +7,14 @@ public class Test {
 	public static void main(String[] args) {
 		
 
+		SignUpPageTest();
+		
+		
+	}
+	
+	
+	public static void SignUpPageTest() {
+		
 		System.setProperty("webdriver.chrome.driver", "/Users/qusaimousa/downloads/chromedriver");
 		WebDriver driver = new ChromeDriver();
 		
@@ -18,5 +26,13 @@ public class Test {
 		
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
