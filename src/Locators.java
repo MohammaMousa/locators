@@ -17,6 +17,10 @@ public class Locators {
 	private static String username = "Qusai@gmail.com";
 	private static String password = "123456789";
 	private static String websiteLink = "http://a.testaddressbook.com";
+	
+	//TODO: **Important** download Intellij
+	//TODO: Add beforeeach method to open chrome.
+	//TODO: Add aftereach method to close chrome.
 
 	@Test
 	public static void main(String[] args) {
