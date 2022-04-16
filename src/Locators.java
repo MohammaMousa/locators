@@ -1,145 +1,117 @@
 
+
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import org.testng.AssertJUnit;
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
-import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
 import constatns.LoginTestsConstants;
-
-
+import config.properties.Properties;
 
 public class Locators {
 
-	private static String username = "Qusai@gmail.com";
-	private static String password = "123456789";
-	private static String websiteLink = "http://a.testaddressbook.com";
-	
-	//TODO: **Important** download Intellij
-	//TODO: Add beforeeach method to open chrome.
-	//TODO: Add aftereach method to close chrome.
+    private static String username = "Qusai@gmail.com";
+    private static String password = "123456789";
 
-	@Test
-	public static void main(String[] args) {
+    public static WebDriver driver;
+@AfterTest
+public void closeTab(){
+    driver = new ChromeDriver();
+    driver.close();
 
-		// testcase 1 --> tese home button ...
 
-		//TestHomeButtton();
+}
 
-		// testcase 2 --> tese sign In page ...
+    public static void main(String[] args) {
+    }
 
-		//TestSignInPage();
-		
-		// testcase 3 ---> test when email and password empty
+    @Test
+    public static void TestHomeButtton() {
 
-		//EmailAndPasswordEmpty();
 
-		// testcase 4 ---> test when fill email and password
-		
-		//FillEmailAndPassword();
+        System.setProperty("webdriver.chrome.driver", Properties.DRIVER_PATH);
+        WebDriver driver = new ChromeDriver();
+        driver.navigate().to("http://a.testaddressbook.com");
+        driver.findElement(By.className("nav-item")).click();
+    }
 
-		// testcase 5---> test when fill email and password empty
-		
-		//FillEmailAndPasswordEmpty();
 
-		// testcase 6 ---> test when fill password and email empty
+    @Test
+    public static void TestSignInPage() {
 
-		//FillPasswordAndEmailEmpty();
-		
-		//testAssertTitle();
-		testSignInIsClicked();
+        System.setProperty("webdriver.chrome.driver", Properties.DRIVER_PATH);
+        WebDriver driver = new ChromeDriver();
+        driver.navigate().to("http://a.testaddressbook.com");
+        driver.findElement(By.id("sign-in")).click();
 
-	}
+    }
 
-	@Test
-	public static void TestHomeButtton() {
+    @Test
+    public static void EmailAndPasswordEmpty() {
 
-		System.setProperty("webdriver.chrome.driver", "/Users/qusaimousa/downloads/chromedriver");
-		WebDriver driver = new ChromeDriver();
-		driver.get(websiteLink);
-		driver.findElement(By.className("nav-item")).click();
-	}
-	
-	
+        System.setProperty("webdriver.chrome.driver", Properties.DRIVER_PATH);
+        WebDriver driver = new ChromeDriver();
+        driver.navigate().to("http://a.testaddressbook.com/sign_in");
+        driver.findElement(By.cssSelector("input.form-control")).sendKeys("");
+        driver.findElement(By.id(LoginTestsConstants.SESSSION_PASSWORD)).sendKeys("");
+        driver.findElement(By.className(LoginTestsConstants.BTN_PRIMARY)).click();
+    }
 
-	@Test
-	public static void TestSignInPage() {
+    @Test
+    public static void FillEmailAndPassword() {
 
-		System.setProperty("webdriver.chrome.driver", "/Users/qusaimousa/downloads/chromedriver");
-		WebDriver driver = new ChromeDriver();
-		driver.get(websiteLink);
-		driver.findElement(By.id("sign-in")).click();
+        System.setProperty("webdriver.chrome.driver", Properties.DRIVER_PATH);
+        WebDriver driver = new ChromeDriver();
+        driver.navigate().to("http://a.testaddressbook.com/sign_in");
+        driver.findElement(By.className("form-control")).sendKeys(username);
+        driver.findElement(By.id(LoginTestsConstants.SESSSION_PASSWORD)).sendKeys(password);
+        driver.findElement(By.className(LoginTestsConstants.BTN_PRIMARY)).click();
+    }
 
-	}
+    @Test
+    public static void FillEmailAndPasswordEmpty() {
 
-	@Test
-	public static void EmailAndPasswordEmpty() {
+        System.setProperty("webdriver.chrome.driver", Properties.DRIVER_PATH);
+        WebDriver driver = new ChromeDriver();
+        driver.navigate().to("http://a.testaddressbook.com/sign_in");
+        driver.findElement(By.className("form-control")).sendKeys(username);
+        driver.findElement(By.cssSelector("input#session_password")).sendKeys("");
+        driver.findElement(By.className(LoginTestsConstants.BTN_PRIMARY)).click();
+    }
 
-		System.setProperty("webdriver.chrome.driver", "/Users/qusaimousa/downloads/chromedriver");
-		WebDriver driver = new ChromeDriver();
-		driver.get(websiteLink);
-		driver.findElement(By.cssSelector("input.form-control")).sendKeys("");
-		driver.findElement(By.id(LoginTestsConstants.session_pass)).sendKeys("");
-		driver.findElement(By.className(LoginTestsConstants.BTN_PRIMARY)).click();
-	}
+    @Test
+    public static void FillPasswordAndEmailEmpty() {
 
-	@Test
-	public static void FillEmailAndPassword() {
+        System.setProperty("webdriver.chrome.driver", Properties.DRIVER_PATH);
+        WebDriver driver = new ChromeDriver();
+        driver.navigate().to("http://a.testaddressbook.com/sign_in");
+        driver.findElement(By.xpath("//input[@class='form-control']")).sendKeys("");
+        driver.findElement(By.id(LoginTestsConstants.SESSSION_PASSWORD)).sendKeys(password);
+        driver.findElement(By.className(LoginTestsConstants.BTN_PRIMARY)).click();
 
-		System.setProperty("webdriver.chrome.driver", "/Users/qusaimousa/downloads/chromedriver");
-		WebDriver driver = new ChromeDriver();
-		driver.get(websiteLink);
-		driver.findElement(By.className("form-control")).sendKeys(username);
-		driver.findElement(By.id(LoginTestsConstants.session_pass)).sendKeys(password);
-		driver.findElement(By.className(LoginTestsConstants.BTN_PRIMARY)).click();
-	}
+    }
 
-	@Test
-	public static void FillEmailAndPasswordEmpty() {
+    @Test
+    public static void testAssertTitle() {
+        System.setProperty("webdriver.chrome.driver", Properties.DRIVER_PATH);
+        WebDriver driver = new ChromeDriver();
+        driver.navigate().to("http://a.testaddressbook.com");
+        String ActualTitle = driver.getTitle();
+        String ExeptedTitle = "Address Book";
+        AssertJUnit.assertEquals(ExeptedTitle, ActualTitle);
+    }
 
-		System.setProperty("webdriver.chrome.driver", "/Users/qusaimousa/downloads/chromedriver");
-		WebDriver driver = new ChromeDriver();
-		driver.get(websiteLink);
-		driver.findElement(By.className("form-control")).sendKeys(username);
-		driver.findElement(By.cssSelector("input#session_password")).sendKeys("");
-		driver.findElement(By.className(LoginTestsConstants.BTN_PRIMARY)).click();
-	}
+    @Test
+    public static void testSignInIsClicked() {
+        System.setProperty("webdriver.chrome.driver", Properties.DRIVER_PATH);
+        WebDriver driver = new ChromeDriver();
+        driver.navigate().to("http://a.testaddressbook.com");
+        driver.findElement(By.id("sign-in")).click();
+        AssertJUnit.assertFalse(driver.findElement(By.id("sign-in")).isSelected());
 
-	@Test
-	public static void FillPasswordAndEmailEmpty() {
 
-		System.setProperty("webdriver.chrome.driver", "/Users/qusaimousa/downloads/chromedriver");
-		WebDriver driver = new ChromeDriver();
-		driver.get(websiteLink);
-		driver.findElement(By.xpath("//input[@class='form-control']")).sendKeys("");
-		driver.findElement(By.id(LoginTestsConstants.session_pass)).sendKeys(password);
-		driver.findElement(By.className(LoginTestsConstants.BTN_PRIMARY)).click();
+    }
 
-	}
-	
-	@Test
-	public static void testAssertTitle() {
-		System.setProperty("webdriver.chrome.driver", "/Users/qusaimousa/downloads/chromedriver");
-		WebDriver driver = new ChromeDriver();
-		driver.navigate().to("http://a.testaddressbook.com");
-		String ActualTitle = driver.getTitle();
-		String ExeptedTitle = "Address Book";
-		AssertJUnit.assertEquals(ExeptedTitle, ActualTitle);
-	}
-	
-	@Test
-	public static void testSignInIsClicked() {
-		System.setProperty("webdriver.chrome.driver", "/Users/qusaimousa/downloads/chromedriver");
-		WebDriver driver = new ChromeDriver();
-		driver.findElement(By.id("sign-in")).click();
-		AssertJUnit.assertTrue(driver.findElement(By.id("sign-in")).isSelected());
-        System.out.println(driver.findElement(By.id("sig-in")).isSelected());  
-
-		
-	}
-	
 
 }
